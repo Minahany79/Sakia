@@ -1,0 +1,30 @@
+label{
+    font-size: 24px;
+}
+h1{
+    font-size: 2.2rem;
+    font-weight: bolder;
+}
+.field > label{
+    font-weight: bold;.awesome-rating .ui-rating-star, .awesome-rating  .ui-rating-cancel {
+    float: initial;
+    display: inline;
+}
+}
+.bg-image{
+    height: 100%rem;width:100%;
+    background-size:cover;
+     background-image:url("/assets/layout/images/person.png");
+     background-position:50% 50%;
+   }
+small{
+    color: red;
+}
+.plus-icon{
+    cursor: pointer;
+    background-color: #5AB7B2; width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}

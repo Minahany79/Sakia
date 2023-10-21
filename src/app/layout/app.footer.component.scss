@@ -1,0 +1,85 @@
+footer {
+    background: #212F65;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+.arrows {
+    display: block;
+    position: absolute;
+    top: 40%;
+    right: 50px;
+    transform: translateY(-50%);
+    width: 100px;
+}
+h4 {
+    color: #fff;
+}
+hr {
+    border-color: #fff;
+    border-width: 2px;
+    margin: 0;
+}
+.upper{
+    padding-top: 90px;
+    padding-bottom: 90px;
+}
+
+.copyrights {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.footer .logo img{
+    min-width: 60%;
+    display: block;
+    margin: 0 auto;
+}
+.right-border {
+    border-right: 1px solid #fff;
+}
+.vertical-center {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.vertical-center div {
+    width: 80%;
+}
+.social a {
+    color: #fff;
+    font-size: 30px;
+    margin: 0 30px 0 0;
+    i {
+    font-size: 1.7rem;
+}
+}
+
+.rtl .arrows {
+    left: 150px;
+    right: unset;
+}
+.rtl .right-border {
+    border-right: none;
+    border-left: 1px solid #fff;
+}
+@media (max-width: 767px) {
+    .container {
+        text-align: center;
+    }
+    .arrows {
+    right: 100px;
+}
+}
+@media (max-width: 1700px) {
+    .arrows {
+        display: none;
+    }
+}
+
+// .container { margin-left: auto; margin-right: auto; }
+// @media only screen and (max-width: 767px) { .container { max-width: 100%; } }
+// @media only screen and (min-width: 768px) { .container { max-width: 740px; } }
+// @media only screen and (min-width: 992px) { .container { max-width: 980px; } }
+// @media only screen and (min-width: 1200px) { .container { max-width: 1140px; } }
+// @media only screen and (min-width: 1400px) { .container { max-width: 1320px; } }

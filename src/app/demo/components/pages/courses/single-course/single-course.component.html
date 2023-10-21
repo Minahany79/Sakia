@@ -1,0 +1,263 @@
+<!-- Advanced Layout -->
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <div class="p-fluid flex justify-content-center ">
+                <h1>Course Details</h1>
+            </div>
+            <div class="p-fluid p-formgrid grid">
+                <!-- Name -->
+                <div class="field col-12">
+                    <label for="name">Name</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="courseModel.name" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseModel.name}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.name">Name is required.</small>
+                </div>
+                <!-- Tracks -->
+                <div class="field col-12">
+                    <label class="mb-3">Tracks</label>
+                    <div class="formgrid grid">
+                        <div class="col-12 md:col-4 field-checkbox" *ngFor="let track of (tracks$ | async)?.data">
+                            <p-checkbox name="tracks" [value]="track.id" [(ngModel)]="courseModel.tracks"
+                                [inputId]="'track'+track.id"></p-checkbox>
+                            <label [for]="'track'+track.id">{{track.name}}</label>
+                        </div>
+
+                    </div>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.tracks">Tracks course is
+                        required.</small>
+                </div>
+                <!-- cover image  -->
+                <div class="field col-12">
+                    <label class="mb-3">Cover Image</label>
+                    <p-fileUpload name="coverImage" [maxFileSize]="200000" [previewWidth]="100" [multiple]="false"
+                        [customUpload]="true" [auto]="true" (uploadHandler)="handleAppendImg($event)">
+                    </p-fileUpload>
+                </div>
+                <!-- promo -->
+                <div class="field col-12">
+                    <label for="promo">Promo</label>
+                    <input type="text" pInputText id="promo" [(ngModel)]="courseModel.promo" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseModel.promo}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.promo">Course promo is
+                        required.</small>
+                </div>
+                <!-- descriptipon -->
+                <div class="field col-12">
+                    <label for="description">Description</label>
+                    <textarea id="description" pInputTextarea [(ngModel)]="courseModel.description" required autofocus
+                        rows="3" cols="20"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseModel.description}"></textarea>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.description">Course description
+                        is
+                        required.</small>
+                </div>
+                <!-- Subject -->
+                <div class="field col-12">
+                    <label for="subject">Subject</label>
+                    <p-dropdown [options]="(subjects$ | async)" [filter]="true" filterBy="name" [showClear]="true"
+                        [(ngModel)]="courseModel.subject" optionLabel="name" optionValue="id"
+                        placeholder="Select Subject" [virtualScroll]="true" [virtualScrollItemSize]="10"
+                        [virtualScrollOptions]="{ showLoader: true, delay: 250 }">
+                        <ng-template pTemplate="item selectedItem" let-subject>
+                            <div class="country-item country-item-value">{{subject.name }}</div>
+                        </ng-template>
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.subject">Course subject is
+                        required.</small>
+                </div>
+                <!-- summary -->
+                <div class="field col-12">
+                    <label for="summary">Summary</label>
+                    <textarea id="summary" pInputTextarea [(ngModel)]="courseModel.summary" required autofocus rows="3"
+                        cols="20" [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseModel.summary}"></textarea>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.summary">Course summary is
+                        required.</small>
+                </div>
+                <!-- Goals -->
+                <div class="field col-12">
+                    <label>Goals</label>
+                    <div style="width: fit-content; margin-bottom: 20px;">
+                        <span class="plus-icon " (click)="handleGoals('create',0)">
+                            <i class="pi pi-plus" style=" color:white"></i>
+                        </span>
+                    </div>
+                    <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.goals">Course goals is
+                        required.</small> -->
+                    <ng-container *ngIf="courseModel.goals && courseModel.goals.length > 0">
+                        <div *ngFor="let goal of courseModel.goals; let i = index" class="mb-3">
+                            <label [for]="'goal'+i">Goal {{i+1}}</label>
+                            <div class="flex align-items-center justify-content-center">
+                                <textarea [id]="'goal'+i" pInputTextarea rows="3" cols="20"
+                                    (change)="handleTextarea($event,'goals',i)"
+                                    [value]="courseModel.goals[i]"></textarea>
+                                <span class="plus-icon" (click)="handleGoals('remove',i)">
+                                    <i class="pi pi-minus" style="color:white"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- Syllabus -->
+                <div class="field col-12">
+                    <label for="syllabus">Syllabus</label>
+                    <textarea id="syllabus" pInputTextarea
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseModel.syllabus}"
+                        [(ngModel)]="courseModel.syllabus" required autofocus rows="3" cols="20"></textarea>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.syllabus">Syllabus course is
+                        required.</small>
+                </div>
+                <!-- Level -->
+                <div class="field col-12">
+                    <label for="level">Level</label>
+                    <p-dropdown id="level" [showClear]="true" [(ngModel)]="courseModel.level"
+                        [options]="level | keyvalue" optionLabel="value" optionValue="value"
+                        placeholder="Select a Status">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="courseModel && courseModel.level" class="product-badge status-"
+                                [ngClass]="{'status-instock': courseModel.level === 'Beginner' , 'status-lowstock' : courseModel.level === 'Intermediate', 'status-outofstock' : courseModel.level === 'Hard'}">{{courseModel.level}}</span>
+                        </ng-template>
+                        <ng-template let-level pTemplate="level">
+                            <span
+                                [ngClass]="{'status-instock': level.key === 'beginner' , 'status-lowstock' : level.key === 'intermediate','status-outofstock' : level.key === 'hard'}"
+                                class="product-badge">{{level.value}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.level">Course level is
+                        required.</small>
+                </div>
+                <!-- Duration -->
+                <div class="field col-12 md:col-7">
+                    <label for="level">Duration</label>
+                    <p-inputNumber [(ngModel)]="courseModel.duration"
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseModel.duration}" mode="decimal"
+                        [showButtons]="true" autofocus inputId="level" [min]="0" [max]="500">
+                    </p-inputNumber>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.duration">Course duration is
+                        required.</small>
+                </div>
+                <!-- people reviews -->
+                <div class="field col-12 md:col-8">
+                    <label for="reviews">Reviews</label>
+                    <textarea id="reviews" pInputTextarea [(ngModel)]="courseModel.peopleReviews" required rows="3"
+                        cols="20"></textarea>
+                </div>
+                <!-- Rating -->
+                <div class="field col-12 md:col-4 flex flex-column justify-content-center align-items-center">
+                    <label for="rating">Rating</label>
+                    <p-rating class="w-100 fs-6" inputId="rating" [(ngModel)]="courseModel.rating"></p-rating>
+                </div>
+                <!-- start Date -->
+                <div class="field col-8 md:col-6">
+                    <label for="startDate">Start Date</label>
+                    <p-calendar [minDate]="current" inputId="startDate" [showIcon]="true"
+                        [showTransitionOptions]="'0.5s'" [hideTransitionOptions]="'0.5s'"
+                        [(ngModel)]="courseModel.startDate"></p-calendar>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.startDate">Course start date is
+                        required.</small>
+                </div>
+                <!-- End Date -->
+                <div class="field col-8 md:col-6">
+                    <label for="endDate">End Date</label>
+                    <p-calendar [minDate]="current" inputId="endDate" [showIcon]="true" [showTransitionOptions]="'0.5s'"
+                        [hideTransitionOptions]="'0.5s'" [(ngModel)]="courseModel.endDate"></p-calendar>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.endDate">Course end date is
+                        required.</small>
+                </div>
+                <!-- Language -->
+                <div class="field col-12 md:col-7">
+                    <label for="langugae">Language</label>
+                    <input type="text" pInputText id="langugae" [(ngModel)]="courseModel.language" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !courseModel.language}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.language">Langugae is
+                        required.</small>
+                </div>
+                <!-- Categories -->
+                <div class="field col-12">
+                    <label for="catgories">Catgories</label>
+                    <div *ngFor="let category  of (categories$ | async)" class="field-checkbox col-12 md:col-4">
+                        <p-radioButton [inputId]="'category'+category.id" name="category" [value]="category.id"
+                            [(ngModel)]="courseModel.category"></p-radioButton>
+                        <label [for]="'category'+category.id">{{category.name}}</label>
+                    </div>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.category">Course category is
+                        required.</small>
+                </div>
+                <!-- Price -->
+                <div class="field col-12 md:col-7">
+                    <label for="price">Price</label>
+                    <p-inputNumber [(ngModel)]="courseModel.price" [showButtons]="true" buttonLayout="horizontal"
+                        inputId="price" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-rounded"
+                        incrementButtonClass="p-button-rounded" incrementButtonIcon="pi pi-plus"
+                        decrementButtonIcon="pi pi-minus" mode="currency" currency="EGP">
+                    </p-inputNumber>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.price">Course price is
+                        required.</small>
+                </div>
+                <!-- Instructors -->
+                <div class="field col-12">
+                    <label class="mb-3">Instructor</label>
+                    <div class="formgrid grid">
+                        <div class="col-12 md:col-4 field-checkbox"
+                            *ngFor="let instructor of (instructors$ | async)?.data">
+                            <p-checkbox name="instructors" [value]="instructor.id" [(ngModel)]="courseModel.instructors"
+                                [inputId]="'instructor'+instructor.id"></p-checkbox>
+                            <label [for]="'instructor'+instructor.id">{{instructor.name}}</label>
+                        </div>
+                    </div>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.instructors">Course instructor
+                        is
+                        required.</small>
+                </div>
+                <!-- Tags -->
+                <div class="field col-12">
+                    <label>Tags</label>
+                    <div style="width: fit-content; margin-bottom: 20px;">
+                        <span class="plus-icon " (click)="handleTags('create',0)">
+                            <i class="pi pi-plus" style="color:white"></i>
+                        </span>
+                    </div>
+                    <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !courseModel.tags">Course tags is
+                                            required.</small> -->
+                    <ng-container *ngIf="courseModel.tags && courseModel.tags.length > 0">
+                        <div *ngFor="let tag of courseModel.tags; let i = index" class="mb-3">
+                            <label [for]="'tag'+i">Tag {{i+1}}</label>
+                            <div class="flex align-items-center justify-content-center">
+                                <textarea [id]="'tag'+i" pInputTextarea required rows="3" cols="20"
+                                    (change)="handleTextarea($event,'tags',i)" [value]="courseModel.tags[i]"></textarea>
+                                <span class="plus-icon" (click)="handleTags('remove',i)">
+                                    <i class="pi pi-minus" style="color:white"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div class="field flex justify-content-around">
+                    <div>
+                        <button pButton pRipple label="Cancel" icon="pi pi-times" class="mr-2 p-button-danger"
+                            (click)="cancelFormDialog = true"></button>
+                    </div>
+                    <div>
+
+                        <button style="background-color: #5AB8B3; color: white;" pButton pRipple label="Save"
+                            icon="pi pi-check" class="ml-2 p-button-success" (click)="handleSaveCourse()"></button>
+                    </div>
+                </div>
+            </div>
+            <p-dialog [(visible)]="cancelFormDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Are you sure you want to cancel add course form?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                        (click)="cancelFormDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                        (click)="handleCancel()"></button>
+                </ng-template>
+            </p-dialog>
+        </div>
+    </div>
+</div>

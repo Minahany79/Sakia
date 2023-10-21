@@ -1,0 +1,21 @@
+.section-material{
+display: flex;
+justify-content: center;
+i {
+    margin: 0 10px 0 10px;
+    cursor: pointer;
+    &:hover{
+        color: #5AB7B2;
+    }
+}
+}
+button {
+    background-color: #5AB7B2 !important;
+    color: white !important;
+}
+.pi {
+   font-size: 2rem;
+}
+small{
+    color: red;
+}

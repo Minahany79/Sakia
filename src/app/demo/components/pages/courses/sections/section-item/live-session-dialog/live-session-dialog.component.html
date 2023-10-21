@@ -1,0 +1,40 @@
+<p-toast></p-toast>
+<p-dialog [(visible)]="showSessionDialog" [style]="{width: '600px', minHeight:'650px'}" header="Live Session Details"
+    [modal]="true" class="p-fluid">
+    <ng-template pTemplate="content ">
+        <div class="field py-5">
+            <label for="startTime">Start Time</label>
+            <p-calendar [showIcon]="true" [hourFormat]="'12'" dateFormat="dd/mm/yy" [minDate]="minDate"
+                [(ngModel)]="liveSession.startTime" [showTime]="true" inputId="time"></p-calendar>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !liveSession.startTime">Start Time is
+                required.</small>
+        </div>
+        <div class="field  pb-5">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="liveSession.materialName" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !liveSession.materialName}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !liveSession.materialName">Material name is
+                required.</small>
+        </div>
+        <div class="field pb-5">
+            <label for="durInMins">Duration in Mins</label>
+            <p-inputNumber mode="decimal" [(ngModel)]="liveSession.durationInMin" [showButtons]="true" [min]="0"
+                [max]="100" inputId="durInMins">
+            </p-inputNumber>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !liveSession.durationInMin">Duration time is
+                required.</small>
+        </div>
+        <div class="field pb-5">
+            <label for="topic">Topic</label>
+            <input type="text" pInputText id="topic" [(ngModel)]="liveSession.topic" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !liveSession.topic}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !liveSession.topic">Topic is required.</small>
+
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+            (click)="materialDialog.next({liveSession:false})"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveMaterial()"></button>
+    </ng-template>
+</p-dialog>

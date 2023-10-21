@@ -1,0 +1,39 @@
+<p-toast></p-toast>
+<p-dialog [(visible)]="showVideoDialog" [style]="{width: '600px', minHeight:'650px'}" header="Live Session Details"
+    [modal]="true" class="p-fluid">
+    <ng-template pTemplate="content ">
+        <div class="field  pb-5">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="videoModel.materialName" required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !videoModel.materialName}" />
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !videoModel.materialName">Material name is
+                required.</small>
+        </div>
+        <div class="field pb-5">
+            <label for="durInMins">Duration in Mins</label>
+            <p-inputNumber mode="decimal" [(ngModel)]="videoModel.durationInMin" [showButtons]="true" [min]="0"
+                [max]="100" inputId="durInMins">
+            </p-inputNumber>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !videoModel.durationInMin">Duration time is
+                required.</small>
+        </div>
+        <div class="field pb-5">
+            <label for="videoUrl">Video URL</label>
+            <textarea id="videoUrl" pInputTextarea [(ngModel)]="videoModel.videoUrl" required rows="3" cols="20"
+                required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !videoModel.videoUrl}"></textarea>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !videoModel.videoUrl">URL Video is required.</small>
+        </div>
+        <div class="field pb-5">
+            <label for="info">Additional Information</label>
+            <textarea id="info" pInputTextarea [(ngModel)]="videoModel.additionalInfo" required rows="3" cols="20"
+                required autofocus
+                [ngClass]="{'ng-invalid ng-dirty' : submitted && !videoModel.additionalInfo}"></textarea>
+            <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !videoModel.additionalInfo">URL Video is required.</small> -->
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+            (click)="materialDialog.next({video:false})"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveMaterial()"></button>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,37 @@
+.card-image {
+    height: 200px;
+     width: 200px;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 50%;
+}
+.plus-icon{
+    cursor: pointer;
+    background-color: #5AB7B2; width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.section-item hr {
+    width: 90%;
+    border-top:2px dashed #000000;
+    position: relative;
+    left: 50px;
+
+}
+.section-item img {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    left: 620px;
+    bottom: 29px;
+    border-radius: 50%;
+    border: 2px solid black;
+
+}
+@media screen and (max-width: 992px) {
+  .section-item span {
+    display: none;
+  }
+}

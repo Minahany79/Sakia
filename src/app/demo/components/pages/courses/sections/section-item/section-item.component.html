@@ -1,0 +1,50 @@
+<div class="card mb-5">
+    <div class="p-fluid grid">
+        <p-toast></p-toast>
+        <div class="field col-12 md:col-9">
+            <span class="p-float-label">
+                <input [disabled]="isFormDisabled" id="scTitle" type="text" pInputText
+                    [(ngModel)]="sectionModel.sectionTitle" required autofocus
+                    [ngClass]="{'ng-invalid ng-dirty' : submitted && !sectionModel.sectionTitle}">
+                <label for="scTitle">Title</label>
+            </span>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !sectionModel.sectionTitle">Section title is
+                required.</small>
+        </div>
+        <div class="field col-12 md:col-3">
+            <span class="p-float-label">
+                <p-inputNumber [disabled]="isFormDisabled" [(ngModel)]="sectionModel.durationInHour" mode="decimal"
+                    [showButtons]="true" inputId="scDurationInHour" [min]="0" [max]="100">
+                </p-inputNumber>
+                <label for="scDurationInHour">Duration In Hours</label>
+            </span>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !sectionModel.durationInHour">Section
+                Duration is
+                required.</small>
+        </div>
+        <div class="field col-12">
+            <span class="p-float-label">
+                <textarea [disabled]="isFormDisabled" id="scInfo" pInputTextarea [(ngModel)]="sectionModel.sectionInfo"
+                    autofocus rows="3" cols="20"
+                    [ngClass]="{'ng-invalid ng-dirty' : submitted && !sectionModel.sectionInfo}"></textarea>
+                <label for="scInfo">Information</label>
+
+            </span>
+            <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !sectionModel.sectionInfo">Course Information
+                        is
+                        required.</small> -->
+        </div>
+        <div class="field col-12 section-material" *ngIf="sectionId">
+            <i class="pi pi-video" (click)="showDialog.next({ liveSession: true})"></i>
+            <i class="pi pi-play" (click)="showDialog.next({ video: true})"></i>
+            <!-- <i class="pi pi-book" (click)="materialDialog = true"></i>
+            <i class="pi pi-file" (click)="materialDialog = true"></i> -->
+        </div>
+        <div class="field flex flex align-items-center justify-content-center">
+            <button pButton pRipple label="Save" icon="pi pi-check" class="ml-2 p-button-success"
+                (click)="handleSaveSection()" [disabled]="isFormDisabled"></button>
+        </div>
+    </div>
+</div>
+<app-live-session-dialog [materialDialog]="showDialog" [sectionId]="sectionId"></app-live-session-dialog>
+<app-video-dialog [materialDialog]="showDialog" [sectionId]="sectionId"></app-video-dialog>

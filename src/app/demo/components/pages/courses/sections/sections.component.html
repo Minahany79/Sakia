@@ -1,0 +1,29 @@
+<div class="container">
+    <br><br>
+    <div class="grid flex justify-content-center align-items-center">
+        <div class=" col-12 md:col-3 card-image shadow-2"
+            [style.backgroundImage]="'url(https://picsum.photos/200/200?random='+random+')'">
+        </div>
+        <div class="col-12 md:col-9 ">
+            <h1>{{courseInfo.name}}</h1>
+            <h3>{{courseInfo.description}}</h3>
+            <h3>{{courseInfo.summary}}</h3>
+        </div>
+    </div><br>
+</div>
+<h1 class="text-center">Add Sections</h1>
+<div class="container flex justify-content-end">
+    <span class="plus-icon " style="float: right;" (click)="onAddSection()">
+        <i class="pi pi-plus" style="font-size: 1.6rem; color:white"></i>
+    </span>
+</div>
+<div class="container">
+    <div class="col-12 section-item" *ngFor="let section of sections; let i = index">
+        <app-section-item [courseId]="courseId"></app-section-item>
+        <br>
+        <span *ngIf="i+1 < sections.length">
+            <hr>
+            <img src="../../../../../../assets/hr-dashed-icon.svg" alt="hr dashed icon">
+        </span>
+    </div>
+</div>
